@@ -1,0 +1,17 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Information extends Model
+{
+    protected $table = 'information';
+    protected $fillable = [
+    	'id',
+    	'name',
+    	'email',
+    	'phone',
+    	'country'
+    ];
+}
