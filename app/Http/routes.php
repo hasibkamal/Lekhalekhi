@@ -11,16 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('layout.welcome');
-});
-
-Route::get('crud/create','CrudController@createForm');
-Route::post('crud/store','CrudController@storeInformation');
-Route::get('crud/list','CrudController@getList');
-Route::get('crud/edit/{id}','CrudController@editInformation');
-Route::post('crud/update/{id}','CrudController@updateInformation');
-Route::get('crud/delete/{id}','CrudController@deleteInformation');
-Route::get('layout','MyController@layout');
-Route::get('dashboard','MyController@dashboard');
-Route::get('home','MyController@home');
+Route::get('login','LoginController@login');
+Route::post('login-check','LoginController@loginCheck');
+Route::get('logout','LoginController@logout');

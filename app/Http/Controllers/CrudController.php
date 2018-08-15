@@ -56,4 +56,8 @@ class CrudController extends Controller
     	return redirect('crud/list');
 
     }
+
+    public function home(){
+        return view('home');
+    }
 }
