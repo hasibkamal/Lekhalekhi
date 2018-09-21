@@ -156,7 +156,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        ArtemSchander\L5Modular\ModuleServiceProvider::class
+        ArtemSchander\L5Modular\ModuleServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        yajra\Datatables\DatatablesServiceProvider::class
 
     ],
 
@@ -205,7 +207,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Datatables' => yajra\Datatables\Datatables::class
     ],
 
 ];
