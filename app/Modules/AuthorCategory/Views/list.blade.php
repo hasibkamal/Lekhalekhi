@@ -1,6 +1,7 @@
 @extends('layout.admin.admin-layout')
 
 @section('content')
+    @include('parts.admin.message')
     <div class="card mb-3">
         <div class="card-header">
             <h5 class="float-left"><i class="fas fa-table"></i> Author Category</h5>
@@ -56,9 +57,9 @@
                     columns:[
                         {name:'serial',data:'serial'},
                         {name:'category_name',data:'category_name'},
+                        {name:'menu_status',data:'menu_status'},
                         {name:'status',data:'status'},
                         // {name:'category_image',data:'category_image'},
-                        {name:'menu_status',data:'menu_status'},
                         {name:'action',data:'action'}
                     ],
                     "aaSorting":[]

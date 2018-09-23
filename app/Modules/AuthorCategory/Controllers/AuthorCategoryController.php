@@ -58,30 +58,38 @@ class AuthorCategoryController extends Controller
         $authorCategory = AuthorCategory::orderBy('category_name','asc')->get(['id', 'category_name','status', 'feature_image', 'menu_status']);
 
         return Datatables::of($authorCategory)
-//            ->editColumn('serial', function () {
-//                return '';
-//            })
-//
-//            ->editColumn('menu_status', function ($data) {
-//                if ($data->menu_status == 1) {
-//                    return '<span class="label label-info">Active</span>';
-//                }
-//                return '<span class="label label-danger">Inactive</span>';
-//            })
-//            ->editColumn('status', function ($data) {
-//                if ($data->status == 1) {
-//                    return '<span class="label label-primary">Active</span>';
-//                }
-//                return '<span class="label label-danger">Inactive</span>';
-//            })
+            ->addColumn('serial', function () {
+                return '';
+            })
+
+            ->editColumn('menu_status', function ($data) {
+                if ($data->menu_status == 1) {
+                    return '<span class="btn btn-info btn-sm">Active</span>';
+                }
+                return '<span class="btn btn-danger btn-sm">Inactive</span>';
+            })
+            ->editColumn('status', function ($data) {
+                if ($data->status == 1) {
+                    return '<span class="btn btn-info btn-sm">Active</span>';
+                }
+                return '<span class="btn btn-danger btn-sm">Inactive</span>';
+            })
             ->addColumn('action', function ($data) {
-                return $data->id;
-//                $str = '';
-//                $str .= '<a href="/author-category/open/' . Encryption::encodeId($data->id) . '" class="btn btn-primary btn-xs"><i class="fa fa-folder-open"></i> Open</a>';
-//                return $str;
+                $str = '';
+                $str .= '<a href="/author-category/open/' . Encryption::encodeId($data->id) . '" class="btn btn-primary btn-sm"><i class="fa fa-folder-open"></i> Open</a> ';
+                $str .= '<a href="/author-category/edit/' . Encryption::encodeId($data->id) . '" class="btn btn-info btn-sm"><i class="fa fa-edit"></i> Edit</a> ';
+                $str .= '<a onclick="return confirm(\'Are you sure?\')" href="/author-category/delete/' . Encryption::encodeId($data->id) . '" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Delete</a>';
+                return $str;
             })
 //            ->rawColumns(['menu_status', 'status', 'action'])
             ->make(true);
+    }
+
+    public function categoryDelete($categoryId){
+        $decodedId = Encryption::decodeId($categoryId);
+        AuthorCategory::where('id',$decodedId)->delete();
+        Session::flash('success','Category has been deleted successfully');
+        return redirect()->back();
     }
 
     public function categoryEdit($categoryId){
