@@ -17,20 +17,29 @@ class AuthorCategoryController extends Controller
         return view("AuthorCategory::create");
     }
 
-    public function categoryStore(Request $request){
+    public function categoryStore(Request $request, $categoryId=''){
+
 
         $this->validate($request, [
             'category_name' => 'required|max:100',
             'status' => 'required',
             'feature_image' => 'required'
         ]);
-        $authorCategory = new AuthorCategory();
+
+        if(!empty($categoryId)){
+            $decodedCategoryId = Encryption::decodeId($categoryId);
+            $authorCategory = AuthorCategory::find($decodedCategoryId);
+        }else{
+            $authorCategory = new AuthorCategory();
+        }
+
         $authorCategory->category_name = $request->get('category_name');
         $authorCategory->status = $request->get('status');
+        $authorCategory->feature_image = $request->get('feature_image');
 
-            $_featureImage = $request->file('feature_image');
             $path = "uploads/category";
             if ($request->hasFile('feature_image')) {
+                $_featureImage = $request->file('feature_image');
                 $mime_type = $_featureImage->getClientMimeType();
 //                if($mime_type == 'image/jpeg' || $mime_type == 'image/jpg' || $mime_type == 'image/png'){
                 if(!in_array($mime_type,['image/jpeg','image/jpg','image/png']))
@@ -46,7 +55,13 @@ class AuthorCategoryController extends Controller
             }
             
         $authorCategory->save();
-        Session::flash('success','Category successfully stored');
+
+        $message = 'Category successfully saved';
+        if(!empty($categoryId))
+            $message = 'Category successfully updated';
+
+        Session::flash('success',$message);
+
         return redirect('author-category/list');
     }
 
@@ -93,6 +108,16 @@ class AuthorCategoryController extends Controller
     }
 
     public function categoryEdit($categoryId){
-        dd($categoryId);
+        $decodedCategoryId = Encryption::decodeId($categoryId);
+        $authorCategory = AuthorCategory::find($decodedCategoryId);
+        $viewMode = 'edit';
+        return view('AuthorCategory::edit',compact('authorCategory','viewMode'));
+    }
+
+    public function categoryOpen($categoryId){
+        $decodedCategoryId = Encryption::decodeId($categoryId);
+        $authorCategory = AuthorCategory::find($decodedCategoryId);
+        $viewMode = 'open';
+        return view('AuthorCategory::edit',compact('authorCategory','viewMode'));
     }
 }

@@ -8,6 +8,9 @@ Route::group(['module' => 'AuthorCategory', 'middleware' => ['web','auth'], 'nam
     Route::get('/author-category/create','AuthorCategoryController@categoryCreate');
 
     Route::post('/author-category/store','AuthorCategoryController@categoryStore');
+    Route::post('/author-category/store/{id}','AuthorCategoryController@categoryStore');
     Route::get('/author-category/delete/{id}','AuthorCategoryController@categoryDelete');
+    Route::get('/author-category/edit/{id}','AuthorCategoryController@categoryEdit');
+    Route::get('/author-category/open/{id}','AuthorCategoryController@categoryOpen');
 
 });

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>SB Admin - Blank Page</title>
+    <title>Lekhalekhi</title>
     <!-- Bootstrap core CSS-->
     {!! Html::style('/assets/admin/vendor/bootstrap/css/bootstrap.min.css') !!}
     {!! Html::style('/assets/admin/vendor/fontawesome-free/css/all.min.css') !!}
