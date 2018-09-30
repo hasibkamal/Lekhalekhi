@@ -20,6 +20,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('login') }}">Login</a>
+                </li>
             </ul>
         </div>
     </div>
