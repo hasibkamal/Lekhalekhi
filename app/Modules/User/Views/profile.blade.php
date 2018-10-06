@@ -103,14 +103,131 @@
 
 
                 <div class="tab-pane fade" id="eduInfo" role="tabpanel" aria-labelledby="eduInfo-tab">
-
+{{--					 {{ Form::open(['url'=>'', 'method'=>'post']) }}--}}
+                    @forelse($eduInfo as $key => $edu)
+                    <div class="row parent_div" style="padding-top: 20px">
+                        <div class="col-md-3">
+                            <div class="form-group {{ $errors->has('institute')?'has-error':'' }}">
+                                {!! Form::label('institute','Institute:') !!}
+                                {!! Form::text("institute[$key]", $user->institute,['class'=>'form-control']) !!}
+                                {!! $errors->first('institute', '<span class="help-block" style="color: red">:message</span>') !!}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group {{ $errors->has('degree')?'has-error':'' }}">
+                                {!! Form::label('degree','Degree:') !!}
+                                {!! Form::text("degree[$key]", '',['class'=>'form-control']) !!}
+                                {!! $errors->first('degree', '<span class="help-block" style="color: red">:message</span>') !!}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group {{ $errors->has('pass_year')?'has-error':'' }}">
+                                {!! Form::label('pass_year','Passing Year:') !!}
+                                {!! Form::text("pass_year[$key]", '',['class'=>'form-control']) !!}
+                                {!! $errors->first('pass_year', '<span class="help-block" style="color: red">:message</span>') !!}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group {{ $errors->has('cgpa')?'has-error':'' }}">
+                                {!! Form::label('cgpa','CGPA:') !!}
+                                {!! Form::text("cgpa[$key]", '',['class'=>'form-control']) !!}
+                                {!! $errors->first('cgpa', '<span class="help-block" style="color: red">:message</span>') !!}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group {{ $errors->has('out_of')?'has-error':'' }}">
+                                {!! Form::label('out_of','Out Of:') !!}
+                                {!! Form::text("out_of[$key]", '',['class'=>'form-control']) !!}
+                                {!! $errors->first('out_of', '<span class="help-block" style="color: red">:message</span>') !!}
+                            </div>
+                        </div>
+                        <div class="col-md-1" style="padding-top: 30px">
+                            @if($key == 0)
+                            <button class="btn btn-primary add-more">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                            @else
+                            <button class="btn btn-danger remove">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                            @endif
+                        </div>
+                    </div>
+                    @empty
+                    <div class="row parent_div" style="padding-top: 20px">
+                        <div class="col-md-3">
+                            <div class="form-group {{ $errors->has('institute')?'has-error':'' }}">
+                                {!! Form::label('institute','Institute:') !!}
+                                {!! Form::text('institute[]', $user->institute,['class'=>'form-control']) !!}
+                                {!! $errors->first('institute', '<span class="help-block" style="color: red">:message</span>') !!}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group {{ $errors->has('degree')?'has-error':'' }}">
+                                {!! Form::label('degree','Degree:') !!}
+                                {!! Form::text('degree[]', '',['class'=>'form-control']) !!}
+                                {!! $errors->first('degree', '<span class="help-block" style="color: red">:message</span>') !!}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group {{ $errors->has('pass_year')?'has-error':'' }}">
+                                {!! Form::label('pass_year','Passing Year:') !!}
+                                {!! Form::text('pass_year[]', '',['class'=>'form-control']) !!}
+                                {!! $errors->first('pass_year', '<span class="help-block" style="color: red">:message</span>') !!}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group {{ $errors->has('cgpa')?'has-error':'' }}">
+                                {!! Form::label('cgpa','CGPA:') !!}
+                                {!! Form::text('cgpa[]', '',['class'=>'form-control']) !!}
+                                {!! $errors->first('cgpa', '<span class="help-block" style="color: red">:message</span>') !!}
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group {{ $errors->has('out_of')?'has-error':'' }}">
+                                {!! Form::label('out_of','Out Of:') !!}
+                                {!! Form::text('out_of[]', '',['class'=>'form-control']) !!}
+                                {!! $errors->first('out_of', '<span class="help-block" style="color: red">:message</span>') !!}
+                            </div>
+                        </div>
+                        <div class="col-md-1" style="padding-top: 30px">
+                            <button class="btn btn-primary add-more">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    @endforelse
+{{--					{{ Form::close() }}--}}
 
                 </div>
-
+					
 
                 <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
-
-
+					{{ Form::open(['url'=>'', 'method'=>'post']) }}
+					<div class="row" style="padding-top: 20px">
+						<div class="col-md-4">
+							<div class="form-group {{ $errors->has('old_password')?'has-error':'' }}">
+								{!! Form::label('old_password', 'Old Password:') !!}
+								{!! Form::text('old_password','',['class'=>'form-control']) !!}
+								{!! $errors->first('old_password', '<span class="help-block" style="color:red">:message</span>') !!}
+							</div>
+							<div class="form-group {{ $errors->has('new_password')?'has-error':'' }}">
+								{!! Form::label('new_password', 'New Password:') !!}
+								{!! Form::text('new_password','',['class'=>'form-control']) !!}
+								{!! $errors->first('new_password', '<span class="help-block" style="color:red">:message</span>') !!}
+							</div>
+							<div class="form-group {{ $errors->has('confirm_password')?'has-error':'' }}">
+								{!! Form::label('confirm_password', 'Confirm Password:') !!}
+								{!! Form::text('confirm_password','',['class'=>'form-control']) !!}
+								{!! $errors->first('confirm_password', '<span class="help-block" style="color:red">:message</span>') !!}
+							</div>
+						</div>
+					</div>
+					 <div class="form-group">
+						{!! Form::submit('Update',['class'=>'btn btn-info float-left col-md-1']) !!}
+					</div>
+					{{ Form::close() }}
+					
                 </div>
             </div>
         </div>
@@ -143,6 +260,33 @@
             $('.user_dob').datepicker({
                 dateFormat: 'yyyy-mm-dd'
             });
+        });
+
+
+
+        $(document).ready(function(){
+            $('.add-more').on('click',function(){
+                var parent_div = $('.parent_div').eq(0).clone();
+                parent_div.find('.add-more')
+                    .removeClass('add-more')
+                    .removeClass('btn-primary')
+                    .addClass('remove')
+                    .addClass('btn-danger')
+                    .html('<i class="fa fa-minus"></i>');
+
+                parent_div.find('input').each(function(i,input){
+                    $(input).val('');
+                });
+                $('#eduInfo').append(parent_div);
+            });
+
+            // $('.remove').on('click',function(){
+            //     alert(1);
+            // });
+
+            $(document).on('click','.remove',function(){
+                $(this).parent().parent().remove();
+            })
         });
 
 
