@@ -7,6 +7,7 @@ use App\Modules\User\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
@@ -25,15 +26,6 @@ class UserController extends Controller
        return view('User::profile', compact('user','eduInfo'));
     }
 
-    /*$userId = Auth::user()->id;
-    $user = User::leftJoin('author_category','author_category.id','=','users.author_category_id')
-    ->where('users.id',$userId)
-    ->first([
-    'users.*',
-    'author_category.category_name'
-    ]);
-    return view("User::profile",compact('user'));
-     */
     public function basicInfoSave(Request $request)
     {
        $userId = Auth::user()->id;
@@ -72,26 +64,61 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function eduInfoSave(Request $request)
     {
-        //
+        $userId = Auth::user()->id;
+        $data = $request->all();
+        $eduInfoIds = [];
+        foreach($data['institute'] as $key => $institute){
+            $eduInfo = new EduInfo;
+            $eduInfo->user_id = Auth::user()->id;
+            $eduInfo->institute = (isset($data['institute'][$key]))?$data['institute'][$key]:'';
+            $eduInfo->degree = (isset($data['degree'][$key]))?$data['degree'][$key]:'';
+            $eduInfo->passing_year = (isset($data['pass_year'][$key]))?$data['pass_year'][$key]:'';
+            $eduInfo->cgpa = (isset($data['cgpa'][$key]))?$data['cgpa'][$key]:'';
+            $eduInfo->out_of = (isset($data['out_of'][$key]))?$data['out_of'][$key]:'';
+            $eduInfo->save();
+            $eduInfoIds[] = $eduInfo->id;
+        }
+        if(!empty($eduInfoIds)){
+            EduInfo::where('user_id',$userId)->whereNotIn('id',$eduInfoIds)->delete();
+        }
+
+        Session::flash('success','Educational Information successfully saved.');
+
+        return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function updatePassword(Request $request)
     {
-        //
+        $this->validate($request, [
+            'old_password' => 'required',
+            'new_password' => 'required',
+            'confirm_password' => 'required'
+        ]);
+
+        $userId = Auth::user()->id;
+        $user = User::find($userId);
+
+        $oldPassword = $request->get('old_password');
+        $newPassword = $request->get('new_password');
+        $confirmPassword = $request->get('confirm_password');
+
+        if(!(Hash::check($oldPassword,$user->pasword))){
+            Session::flash('error','Old password does not matched');
+            return redirect()->back();
+        }
+
+        if($newPassword != $confirmPassword){
+            Session::flash('error','Confirm password does not matched');
+            return redirect()->back();
+        }
+
+        $generatedPassword = Hash::make($newPassword);
+        $user->password = $generatedPassword;
+        $user->save();
+        Session::flash('success','Password successfully updated.');
+        return redirect()->back();
     }
 
     /**

@@ -103,122 +103,127 @@
 
 
                 <div class="tab-pane fade" id="eduInfo" role="tabpanel" aria-labelledby="eduInfo-tab">
-{{--					 {{ Form::open(['url'=>'', 'method'=>'post']) }}--}}
-                    @forelse($eduInfo as $key => $edu)
-                    <div class="row parent_div" style="padding-top: 20px">
-                        <div class="col-md-3">
-                            <div class="form-group {{ $errors->has('institute')?'has-error':'' }}">
-                                {!! Form::label('institute','Institute:') !!}
-                                {!! Form::text("institute[$key]", $user->institute,['class'=>'form-control']) !!}
-                                {!! $errors->first('institute', '<span class="help-block" style="color: red">:message</span>') !!}
+				    {{ Form::open(['url'=>'user/profile/edu-info-save', 'method'=>'post']) }}
+                    <div id="appendDiv">
+                        @forelse($eduInfo as $key => $edu)
+                            <div class="row parent_div" style="padding-top: 20px">
+                                <div class="col-md-3">
+                                    <div class="form-group {{ $errors->has('institute')?'has-error':'' }}">
+                                        {!! Form::label('institute','Institute:') !!}
+                                        {!! Form::text("institute[]", $edu->institute,['class'=>'form-control']) !!}
+                                        {!! $errors->first('institute', '<span class="help-block" style="color: red">:message</span>') !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group {{ $errors->has('degree')?'has-error':'' }}">
+                                        {!! Form::label('degree','Degree:') !!}
+                                        {!! Form::text("degree[]", $edu->degree,['class'=>'form-control']) !!}
+                                        {!! $errors->first('degree', '<span class="help-block" style="color: red">:message</span>') !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group {{ $errors->has('pass_year')?'has-error':'' }}">
+                                        {!! Form::label('pass_year','Passing Year:') !!}
+                                        {!! Form::text("pass_year[]", $edu->passing_year,['class'=>'form-control']) !!}
+                                        {!! $errors->first('pass_year', '<span class="help-block" style="color: red">:message</span>') !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group {{ $errors->has('cgpa')?'has-error':'' }}">
+                                        {!! Form::label('cgpa','CGPA:') !!}
+                                        {!! Form::text("cgpa[]", $edu->cgpa,['class'=>'form-control']) !!}
+                                        {!! $errors->first('cgpa', '<span class="help-block" style="color: red">:message</span>') !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group {{ $errors->has('out_of')?'has-error':'' }}">
+                                        {!! Form::label('out_of','Out Of:') !!}
+                                        {!! Form::text("out_of[]", $edu->out_of,['class'=>'form-control']) !!}
+                                        {!! $errors->first('out_of', '<span class="help-block" style="color: red">:message</span>') !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding-top: 30px">
+                                    @if($key == 0)
+                                        <label class="btn btn-primary add-more">
+                                            <i class="fa fa-plus"></i>
+                                        </label>
+                                    @else
+                                        <label class="btn btn-danger remove">
+                                            <i class="fa fa-minus"></i>
+                                        </label>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {{ $errors->has('degree')?'has-error':'' }}">
-                                {!! Form::label('degree','Degree:') !!}
-                                {!! Form::text("degree[$key]", '',['class'=>'form-control']) !!}
-                                {!! $errors->first('degree', '<span class="help-block" style="color: red">:message</span>') !!}
+                        @empty
+                            <div class="row parent_div" style="padding-top: 20px">
+                                <div class="col-md-3">
+                                    <div class="form-group {{ $errors->has('institute')?'has-error':'' }}">
+                                        {!! Form::label('institute','Institute:') !!}
+                                        {!! Form::text('institute[]', $user->institute,['class'=>'form-control']) !!}
+                                        {!! $errors->first('institute', '<span class="help-block" style="color: red">:message</span>') !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group {{ $errors->has('degree')?'has-error':'' }}">
+                                        {!! Form::label('degree','Degree:') !!}
+                                        {!! Form::text('degree[]', '',['class'=>'form-control']) !!}
+                                        {!! $errors->first('degree', '<span class="help-block" style="color: red">:message</span>') !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group {{ $errors->has('pass_year')?'has-error':'' }}">
+                                        {!! Form::label('pass_year','Passing Year:') !!}
+                                        {!! Form::text('pass_year[]', '',['class'=>'form-control']) !!}
+                                        {!! $errors->first('pass_year', '<span class="help-block" style="color: red">:message</span>') !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group {{ $errors->has('cgpa')?'has-error':'' }}">
+                                        {!! Form::label('cgpa','CGPA:') !!}
+                                        {!! Form::text('cgpa[]', '',['class'=>'form-control']) !!}
+                                        {!! $errors->first('cgpa', '<span class="help-block" style="color: red">:message</span>') !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group {{ $errors->has('out_of')?'has-error':'' }}">
+                                        {!! Form::label('out_of','Out Of:') !!}
+                                        {!! Form::text('out_of[]', '',['class'=>'form-control']) !!}
+                                        {!! $errors->first('out_of', '<span class="help-block" style="color: red">:message</span>') !!}
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding-top: 30px">
+                                    <label class="btn btn-primary add-more">
+                                        <i class="fa fa-plus"></i>
+                                    </label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {{ $errors->has('pass_year')?'has-error':'' }}">
-                                {!! Form::label('pass_year','Passing Year:') !!}
-                                {!! Form::text("pass_year[$key]", '',['class'=>'form-control']) !!}
-                                {!! $errors->first('pass_year', '<span class="help-block" style="color: red">:message</span>') !!}
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {{ $errors->has('cgpa')?'has-error':'' }}">
-                                {!! Form::label('cgpa','CGPA:') !!}
-                                {!! Form::text("cgpa[$key]", '',['class'=>'form-control']) !!}
-                                {!! $errors->first('cgpa', '<span class="help-block" style="color: red">:message</span>') !!}
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {{ $errors->has('out_of')?'has-error':'' }}">
-                                {!! Form::label('out_of','Out Of:') !!}
-                                {!! Form::text("out_of[$key]", '',['class'=>'form-control']) !!}
-                                {!! $errors->first('out_of', '<span class="help-block" style="color: red">:message</span>') !!}
-                            </div>
-                        </div>
-                        <div class="col-md-1" style="padding-top: 30px">
-                            @if($key == 0)
-                            <button class="btn btn-primary add-more">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                            @else
-                            <button class="btn btn-danger remove">
-                                <i class="fa fa-minus"></i>
-                            </button>
-                            @endif
-                        </div>
+                        @endforelse
                     </div>
-                    @empty
-                    <div class="row parent_div" style="padding-top: 20px">
-                        <div class="col-md-3">
-                            <div class="form-group {{ $errors->has('institute')?'has-error':'' }}">
-                                {!! Form::label('institute','Institute:') !!}
-                                {!! Form::text('institute[]', $user->institute,['class'=>'form-control']) !!}
-                                {!! $errors->first('institute', '<span class="help-block" style="color: red">:message</span>') !!}
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {{ $errors->has('degree')?'has-error':'' }}">
-                                {!! Form::label('degree','Degree:') !!}
-                                {!! Form::text('degree[]', '',['class'=>'form-control']) !!}
-                                {!! $errors->first('degree', '<span class="help-block" style="color: red">:message</span>') !!}
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {{ $errors->has('pass_year')?'has-error':'' }}">
-                                {!! Form::label('pass_year','Passing Year:') !!}
-                                {!! Form::text('pass_year[]', '',['class'=>'form-control']) !!}
-                                {!! $errors->first('pass_year', '<span class="help-block" style="color: red">:message</span>') !!}
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {{ $errors->has('cgpa')?'has-error':'' }}">
-                                {!! Form::label('cgpa','CGPA:') !!}
-                                {!! Form::text('cgpa[]', '',['class'=>'form-control']) !!}
-                                {!! $errors->first('cgpa', '<span class="help-block" style="color: red">:message</span>') !!}
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group {{ $errors->has('out_of')?'has-error':'' }}">
-                                {!! Form::label('out_of','Out Of:') !!}
-                                {!! Form::text('out_of[]', '',['class'=>'form-control']) !!}
-                                {!! $errors->first('out_of', '<span class="help-block" style="color: red">:message</span>') !!}
-                            </div>
-                        </div>
-                        <div class="col-md-1" style="padding-top: 30px">
-                            <button class="btn btn-primary add-more">
-                                <i class="fa fa-plus"></i>
-                            </button>
-                        </div>
+                    <div class="col-md-12">
+                        <button type="submit" name="save_edu" class="btn btn-info float-right col-md-3">Save</button>
                     </div>
-                    @endforelse
-{{--					{{ Form::close() }}--}}
+					{{ Form::close() }}
 
                 </div>
 					
 
                 <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
-					{{ Form::open(['url'=>'', 'method'=>'post']) }}
+					{{ Form::open(['url'=>'user/profile/password-update', 'method'=>'post']) }}
 					<div class="row" style="padding-top: 20px">
 						<div class="col-md-4">
 							<div class="form-group {{ $errors->has('old_password')?'has-error':'' }}">
 								{!! Form::label('old_password', 'Old Password:') !!}
-								{!! Form::text('old_password','',['class'=>'form-control']) !!}
+								{!! Form::password('old_password',['class'=>'form-control']) !!}
 								{!! $errors->first('old_password', '<span class="help-block" style="color:red">:message</span>') !!}
 							</div>
 							<div class="form-group {{ $errors->has('new_password')?'has-error':'' }}">
 								{!! Form::label('new_password', 'New Password:') !!}
-								{!! Form::text('new_password','',['class'=>'form-control']) !!}
+								{!! Form::password('new_password',['class'=>'form-control']) !!}
 								{!! $errors->first('new_password', '<span class="help-block" style="color:red">:message</span>') !!}
 							</div>
 							<div class="form-group {{ $errors->has('confirm_password')?'has-error':'' }}">
 								{!! Form::label('confirm_password', 'Confirm Password:') !!}
-								{!! Form::text('confirm_password','',['class'=>'form-control']) !!}
+								{!! Form::password('confirm_password',['class'=>'form-control']) !!}
 								{!! $errors->first('confirm_password', '<span class="help-block" style="color:red">:message</span>') !!}
 							</div>
 						</div>
@@ -277,7 +282,7 @@
                 parent_div.find('input').each(function(i,input){
                     $(input).val('');
                 });
-                $('#eduInfo').append(parent_div);
+                $('#appendDiv').append(parent_div);
             });
 
             // $('.remove').on('click',function(){
