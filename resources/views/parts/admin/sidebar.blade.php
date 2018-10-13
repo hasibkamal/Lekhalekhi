@@ -5,12 +5,21 @@
             <span>Dashboard</span>
         </a>
     </li>
+    @if(Auth::user()->user_type == '1x101')
     <li class="nav-item">
         <a class="nav-link" href="{{ url('/author-category/list') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Author Category</span>
         </a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url('/author/list') }}">
+            <i class="fas fa-fw fa-pen"></i>
+            <span>Author</span>
+        </a>
+    </li>
+    @endif
     {{--<li class="nav-item dropdown">--}}
         {{--<a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
             {{--<i class="fas fa-fw fa-folder"></i>--}}

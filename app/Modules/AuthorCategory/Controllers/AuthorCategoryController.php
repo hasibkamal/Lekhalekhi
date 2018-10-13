@@ -2,6 +2,7 @@
 
 namespace App\Modules\AuthorCategory\Controllers;
 
+use App\Libraries\ACL;
 use App\Libraries\Encryption;
 use App\Modules\AuthorCategory\Models\AuthorCategory;
 use Illuminate\Http\Request;
@@ -14,12 +15,14 @@ use yajra\Datatables\Datatables;
 class AuthorCategoryController extends Controller
 {
     public function categoryCreate(){
+        if(!ACL::getAccessRight('AuthorCategory', '-A-'))
+            die('You have no access right! Please contact with system admin');
         return view("AuthorCategory::create");
     }
 
     public function categoryStore(Request $request, $categoryId=''){
-
-
+        if(!ACL::getAccessRight('AuthorCategory', '-A-'))
+            die('You have no access right! Please contact with system admin');
         $this->validate($request, [
             'category_name' => 'required|max:100',
             'status' => 'required',
@@ -66,10 +69,16 @@ class AuthorCategoryController extends Controller
     }
 
     public function categoryList(){
+        if(!ACL::getAccessRight('AuthorCategory', '-V-'))
+            die('You have no access right! Please contact with system admin');
+
         return view('AuthorCategory::list');
     }
 
     public function getCategoryList(){
+        if(!ACL::getAccessRight('AuthorCategory', '-V-'))
+            die('You have no access right! Please contact with system admin');
+
         $authorCategory = AuthorCategory::orderBy('category_name','asc')->get(['id', 'category_name','status', 'feature_image', 'menu_status']);
 
         return Datatables::of($authorCategory)
@@ -101,6 +110,9 @@ class AuthorCategoryController extends Controller
     }
 
     public function categoryDelete($categoryId){
+        if(!ACL::getAccessRight('AuthorCategory', '-D-'))
+            die('You have no access right! Please contact with system admin');
+
         $decodedId = Encryption::decodeId($categoryId);
         AuthorCategory::where('id',$decodedId)->delete();
         Session::flash('success','Category has been deleted successfully');
@@ -108,6 +120,9 @@ class AuthorCategoryController extends Controller
     }
 
     public function categoryEdit($categoryId){
+        if(!ACL::getAccessRight('AuthorCategory', '-E-'))
+            die('You have no access right! Please contact with system admin');
+
         $decodedCategoryId = Encryption::decodeId($categoryId);
         $authorCategory = AuthorCategory::find($decodedCategoryId);
         $viewMode = 'edit';
@@ -115,6 +130,9 @@ class AuthorCategoryController extends Controller
     }
 
     public function categoryOpen($categoryId){
+        if(!ACL::getAccessRight('AuthorCategory', '-V-'))
+            die('You have no access right! Please contact with system admin');
+
         $decodedCategoryId = Encryption::decodeId($categoryId);
         $authorCategory = AuthorCategory::find($decodedCategoryId);
         $viewMode = 'open';

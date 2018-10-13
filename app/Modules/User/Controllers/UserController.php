@@ -80,6 +80,7 @@ class UserController extends Controller
             $eduInfo->save();
             $eduInfoIds[] = $eduInfo->id;
         }
+
         if(!empty($eduInfoIds)){
             EduInfo::where('user_id',$userId)->whereNotIn('id',$eduInfoIds)->delete();
         }
