@@ -239,6 +239,7 @@
     </div>
 @endsection
 
+
 @section('footer-script')
     {!! Html::script('/assets/admin/js/bootstrap-datepicker.min.js') !!}
     <script type="text/javascript">
@@ -292,6 +293,13 @@
             $(document).on('click','.remove',function(){
                 $(this).parent().parent().remove();
             })
+        });
+
+        $(document).ready(function(){
+            var url = document.location.toString();
+            if (url.match('#')) {
+                $('.nav-tabs a[href="#' + url.split('#')[1] + '"]').tab('show');
+            }
         });
 
 

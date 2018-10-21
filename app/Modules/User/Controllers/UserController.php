@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Intervention\Image\Facades\Image;
 
 class UserController extends Controller
 {
@@ -44,9 +45,9 @@ class UserController extends Controller
        $user->user_phone = $request->get('user_phone');
        $user->address = $request->get('address');
 
-       $path = "uploads/user";
-       if($request->hasFile('user_image')){
-           $_profileImage = $request->file('user_image');
+       $path = "uploads/users";
+       if($request->hasFile('user_photo')){
+           $_profileImage = $request->file('user_photo');
            $mimeType = $_profileImage->getClientMimeType();
            if(!in_array($mimeType,['image/jpg', 'image/jpeg', 'image/png']))
                return redirect()->back();
@@ -59,8 +60,8 @@ class UserController extends Controller
        }
 
        $user->save();
-        Session::flash('success','Profile information successfully saved.');
-            return redirect()->back();
+       Session::flash('success','Profile information successfully saved.');
+       return redirect('user/profile#basicInfo');
 
     }
 
@@ -87,7 +88,7 @@ class UserController extends Controller
 
         Session::flash('success','Educational Information successfully saved.');
 
-        return redirect()->back();
+        return redirect('user/profile#eduInfo');
     }
 
     public function updatePassword(Request $request)

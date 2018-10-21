@@ -2,6 +2,7 @@
 
 namespace App\Libraries;
 
+use App\Configuration;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -216,6 +217,10 @@ HERE;
             $emailQueue->pdf_type = '';
             $emailQueue->save();
         }
+    }
+
+    public static function auditEmail(){
+        return Configuration::where('caption','AUDIT_EMAIL')->pluck('value');
     }
 
     /*     * ****************************End of Class***************************** */

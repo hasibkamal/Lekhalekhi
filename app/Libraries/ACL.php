@@ -113,8 +113,6 @@ class ACL
                     $accessRight = '-A-V-E-D-';
                 } else if ($user_type == '3x303') {
                     $accessRight = '-A-V-E-D-';
-                } else {
-                    $accessRight = '-V-R-E';
                 }
                 if ($right == "SPU") {
                     if (ACL::hasUserModificationRight($user_type, $right, $id))
